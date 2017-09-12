@@ -1,55 +1,45 @@
 var express = require('express');
-// var http = require('http');
-// var requestify = require('requestify');
-
 var request = require('request');
-
-var bodyParser = require('body-parser');
-
+var firebase = require('firebase');
 var app = express()
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.static('public'));
 
-// Example "https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=token";
-var instagramAuthUrl = "https://api.instagram.com/oauth/authorize/?client_id=6be47e7d8ad240f0a3e2fe038e6eaee3&redirect_uri=http://54.213.76.216:3010/auth/instagram/callback&response_type=token";
+// Start Firebase
+var FirebaseConfig = {
+    apiKey: process.env.FIREBASE_APIKEY,
+    authDomain: process.env.FIREBASE_AUTHDOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASEURL,
+    projectId: process.env.FIREBASE_PROJECTID,
+    storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID
+}
+firebase.initializeApp(config);
+var InstagramToken = firebase.database().ref('instagram/token');
 
-
-var clientId = process.env.clientId;
-var clientSecret = process.env.clientSecret;
+// Instagram Auth Codes
+// var clientId = process.env.INSTAGRAM_CLIENTID;
+var clientId = "6be47e7d8ad240f0a3e2fe038e6eaee3";
+var clientSecret = process.env.INSTAGRAM_CLIENTSECRET;
 
 // Your redirect url where you will handle the code param
-var redirectUri = 'http://54.213.76.216:3010/auth/instagram/callback';
+var redirectUri = 'http://54.213.76.216:3010/instagram/auth/callback';
+// Instagram Auth url
+var instagramAuthUrl = 'https://api.instagram.com/oauth/authorize/?client_id='+ clientId + "&redirect_uri=" + redirectUri + "&response_type=token";
 
 // First redirect user to instagram oauth
-app.get('/tt', function (req, res) {
-  console.log("request");
-  request('https://api.instagram.com/oauth/authorize/?client_id=6be47e7d8ad240f0a3e2fe038e6eaee3&redirect_uri=http://localhost:3000/auth/instagram/callback&response_type=token', function (error, response, body) {
-    console.log('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    console.log('body:', body); // Print the HTML for the Google homepage.
-    res.send(body);
-  });
+app.get('/instagram/auth', function (req, res) {
+  console.log('/instagram/auth');
+  res.redirect(instagramAuthUrl)
 });
 
 // Handle auth code and get access_token for user
-app.get('/auth/instagram/callback', function (req, res) {
-  try {
-    // The code from the request, here req.query.code for express
-    // var code = req.query.code;
-    // var data = instagram.authorizeUser(code, redirectUri);
-    // data.access_token contain the user access_token
-    console.log(reg.params)
-    console.log(reg)
-    console.log(res)
-    console.log(reg.params)
-    res.json(req);
-  } catch (err) {
-    res.json(err);
-  }
+app.get('/instagram/auth/callback', function (req, res) {
+  var newToken = req.params;
+  InstagramToken.set(newToken);
 });
 
-var server = app.listen(3000, function(){
+var server = app.listen(3010, function(){
   var host = server.address().address
   var port = server.address().port
 
