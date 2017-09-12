@@ -39,10 +39,12 @@ app.get('/instagram/auth', function (req, res) {
 // Handle auth code and get access_token for user
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
-  console.log(req.query );
-  var newToken = req.query ;
+  console.log(req.query.access_token);
+  var newToken = req.query.access_token ;
   InstagramToken.set(newToken);
 });
+
+// http://54.213.76.216:3010/instagram/auth/callback#access_token=5960480297.6be47e7.716bc8f04c9e462da4c9a08b47940b8c
 
 var server = app.listen(3010, function(){
   var host = server.address().address
