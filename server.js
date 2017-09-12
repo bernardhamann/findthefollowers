@@ -26,6 +26,7 @@ var clientSecret = process.env.INSTAGRAM_CLIENTSECRET;
 var redirectUri = 'http://54.213.76.216:3010/instagram/auth/callback';
 // Instagram Auth url
 var instagramAuthUrl = 'https://api.instagram.com/oauth/authorize/?client_id='+ clientId + "&redirect_uri=" + redirectUri + "&response_type=token";
+// https://api.instagram.com/oauth/authorize/?client_id=6be47e7d8ad240f0a3e2fe038e6eaee3&redirect_uri=http://54.213.76.216:3010/instagram/auth/callback&response_type=token
 
 // First redirect user to instagram oauth
 app.get('/instagram/auth', function (req, res) {
@@ -35,7 +36,9 @@ app.get('/instagram/auth', function (req, res) {
 
 // Handle auth code and get access_token for user
 app.get('/instagram/auth/callback', function (req, res) {
-  var newToken = req.params;
+  console.log('/instagram/auth/callback');
+  console.log(req);
+  var newToken = req;
   InstagramToken.set(newToken);
 });
 
