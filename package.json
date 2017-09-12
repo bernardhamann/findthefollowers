@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.0",
+    "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "firebase": "^4.3.1",
     "instagram-node-lib": "^0.1.1",

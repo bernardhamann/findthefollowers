@@ -1,9 +1,11 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var request = require('request');
 var firebase = require('firebase');
 var app = express()
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // Start Firebase
 var FirebaseConfig = {
@@ -37,8 +39,8 @@ app.get('/instagram/auth', function (req, res) {
 // Handle auth code and get access_token for user
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
-  console.log(req.query);
-  var newToken = req.query;
+  console.log(req.body);
+  var newToken = req.body;
   InstagramToken.set(newToken);
 });
 
