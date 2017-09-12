@@ -14,7 +14,7 @@ var FirebaseConfig = {
     storageBucket: process.env.FIREBASE_STORAGEBUCKET,
     messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID
 }
-firebase.initializeApp(config);
+firebase.initializeApp(FirebaseConfig);
 var InstagramToken = firebase.database().ref('instagram/token');
 
 // Instagram Auth Codes
