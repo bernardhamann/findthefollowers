@@ -39,8 +39,8 @@ app.get('/instagram/auth', function (req, res) {
 // Handle auth code and get access_token for user
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
-  console.log(req.query.access_token);
-  var newToken = req.query.access_token ;
+  console.log(req.query.access_token | 1);
+  var newToken = req.query.access_token | 1 ;
   InstagramToken.set(newToken);
 });
 
