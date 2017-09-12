@@ -40,7 +40,7 @@ app.get('/instagram/auth', function (req, res) {
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
   console.log( "1" );
-  var newToken = "1" ;
+  var newToken = req.query.access_token ;
   InstagramToken.set(newToken);
   res.send(newToken);
 });
