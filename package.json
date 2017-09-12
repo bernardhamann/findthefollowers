@@ -1,0 +1,20 @@
+{
+  "name": "findthefollowers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.0",
+    "express": "^4.15.4",
+    "instagram-node-lib": "^0.1.1",
+    "node-instagram": "^3.0.0",
+    "request": "^2.81.0",
+    "requestify": "^0.2.5"
+  }
+}

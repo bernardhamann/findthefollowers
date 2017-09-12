@@ -1,0 +1,5 @@
+/node_modules
+/node_engine
+.idea
+configP.json
+configD.json
