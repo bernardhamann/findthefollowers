@@ -42,6 +42,7 @@ app.get('/instagram/auth/callback', function (req, res) {
   console.log( "1" );
   var newToken = "1" ;
   InstagramToken.set(newToken);
+  res.send("ok");
 });
 
 // http://54.213.76.216:3010/instagram/auth/callback#access_token=5960480297.6be47e7.716bc8f04c9e462da4c9a08b47940b8c
