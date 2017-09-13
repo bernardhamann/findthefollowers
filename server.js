@@ -33,17 +33,17 @@ var redirectUri = 'http://54.213.76.216:3010/instagram/auth/callback';
 var instagramAuthUrl = 'https://api.instagram.com/oauth/authorize/?client_id='+ clientId + "&redirect_uri=" + redirectUri + "&response_type=code"
 // "https://api.instagram.com/oauth/authorize/?client_id=6be47e7d8ad240f0a3e2fe038e6eaee3&redirect_uri=http://54.213.76.216:3010/instagram/auth/callback&response_type=code"
 
-// First redirect user to instagram oauth
+// Trigger the auth request
 app.get('/instagram/auth', function (req, res) {
   console.log('/instagram/auth');
   res.redirect(instagramAuthUrl)
 });
 
-// Handle auth code and get access_token for user
+// Handle the callback with the code after user granted permission.
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
   if (req.code){
-    var newCode;
+    var newCode = req.code;
     InstagramCode.set(newCode);
     res.send(newCode);
   }
@@ -53,6 +53,45 @@ app.get('/instagram/auth/callback', function (req, res) {
     }
     res.send("Code Error");
   }
+});
+
+// Use the code to request the access token
+app.get('/instagram/gettoken', function (req, res) {
+
+  console.log('/instagram/gettoken');
+  // do the post request to instagram
+  // curl -F 'client_id=CLIENT_ID' \
+  // -F 'client_secret=CLIENT_SECRET' \
+  // -F 'grant_type=authorization_code' \
+  // -F 'redirect_uri=AUTHORIZATION_REDIRECT_URI' \
+  // -F 'code=CODE' \
+  // https://api.instagram.com/oauth/access_token
+
+  res.send("/instagram/gettoken")
+
+});
+
+// Handle the access token request callback
+app.get('/instagram/gettoken/callback', function (req, res) {
+
+  var newToken = req.body
+  InstagramToken.set(newToken);
+
+  /*
+  Succcessfull response should look like this
+  {
+      "access_token": "fb2e77d.47a0479900504cb3ab4a1f626d174d2d",
+      "user": {
+          "id": "1574083",
+          "username": "snoopdogg",
+          "full_name": "Snoop Dogg",
+          "profile_picture": "..."
+      }
+  }
+  */
+
+  res.send("/instagram/gettoken/callback")
+
 });
 
 var server = app.listen(3010, function(){
