@@ -44,7 +44,7 @@ app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
   if (req.query){
     if (req.query.code){
-      var newCode = req.code;
+      var newCode = req.query.code;
       InstagramCode.set(newCode);
       res.send(newCode);
     }
