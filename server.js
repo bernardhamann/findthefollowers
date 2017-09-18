@@ -42,10 +42,15 @@ app.get('/instagram/auth', function (req, res) {
 // Handle the callback with the code after user granted permission.
 app.get('/instagram/auth/callback', function (req, res) {
   console.log('/instagram/auth/callback');
-  if (req.code){
-    var newCode = req.code;
-    InstagramCode.set(newCode);
-    res.send(newCode);
+  if (req.query){
+    if (req.query.code){
+      var newCode = req.code;
+      InstagramCode.set(newCode);
+      res.send(newCode);
+    }
+    else {
+      res.send("Code Error: req.query but no code");
+    }
   }
   else {
     /*
@@ -53,7 +58,7 @@ app.get('/instagram/auth/callback', function (req, res) {
         res.send("Code Error: " + error_reason);
     }
     */
-    res.send("Code Error");
+    res.send("Code Error: Not req.query");
   }
 });
 
