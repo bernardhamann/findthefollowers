@@ -48,9 +48,11 @@ app.get('/instagram/auth/callback', function (req, res) {
     res.send(newCode);
   }
   else {
+    /*
     if (error_reason){
         res.send("Code Error: " + error_reason);
     }
+    */
     res.send("Code Error");
   }
 });
